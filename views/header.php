@@ -27,6 +27,7 @@
               <div id = "top">
                       <div>
                           <a href="/"><img src = "img/site_img/logo.jpg" height="10%" width="10%"/></a>
+                          </br><?php echo "Date: ".date('d-m-Y');?>
                       </div>
                       <div>
                       <ul class="nav nav-pills">

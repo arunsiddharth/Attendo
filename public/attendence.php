@@ -21,7 +21,7 @@
 		    }
 		    else{
 		        $attendence_array = $_SESSION['attendence_array'];
-		        print_r($attendence_array);
+		        #print_r($attendence_array);
 		        $class = $_SESSION['class'];
                 $query = "SELECT * FROM classes WHERE class_name = '".$_SESSION['class']."'";
                 $results = $conn->query($query);

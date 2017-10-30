@@ -2,14 +2,16 @@
 <form action = "attendence_viewer.php" method="POST">
     <fieldset>
         <div class = "form-group">
-                <select name="view_date" required="required" placeholder="Select Date">
+            <label for="sel1">Select Date:</label>
+                <select name="view_date" required="required" placeholder="Select Date"  class="form-control">
 <?php
                 foreach($show as $key => $value){
-                    echo "<option value={$key}>{$key}</option>";
+                    echo "<option value='".$key."'}>{$key}</option>";
                 }
 ?>
 
                 </select>
+            </label>
         </div>
 
         <div class = "form-group">

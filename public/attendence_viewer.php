@@ -41,32 +41,34 @@
             $row = $results->fetch_assoc();
             $cid = $row['cid'];
             $query = "SELECT * FROM dates WHERE cid=".$cid." AND date='".$view_date."'";
+            #echo $query;
             $results = $conn ->query($query);
-            if($results->num_rows>0){
-                $flag=1;
+            #print_r($results);
+            if(1){
+                $present=1;
                 $row =$results->fetch_assoc();
                 $did = $row['did'];
                 $image_path = $row['image'];
                 //Get sid
                 $query = "SELECT * FROM attendence WHERE did=".$did;
                 $results = $conn->query($query);
-
                 //yehi pr table bna daali
                 $table = "<table class ='table table-striped'><thead><tr><th>Student ID</th><th>Student Name</th><th>Student Image</th></tr></thead>";
                 while($row = $results->fetch_assoc()){
                     $temp_sid = $row['sid'];
                     $query = "SELECT * FROM student WHERE sid = ".$temp_sid;
                     $temp_results=$conn->query($query);
-                    $temp_row = $temp_result->fetch_assoc();
-                    $table = $table."<tr align='left'><td>".$temp_row['sid']."}</td><td>".$temp_row['student_name']."</td><td><img src='".$temp_row['img_path']."'width='45' height='50'/></td></tr>";
+                    $temp_row = $temp_results->fetch_assoc();
+                    $table = $table."<tr align='left'><td>".$temp_row['sid']."</td><td>".$temp_row['name']."</td><td><img src='".$temp_row['img_path']."'width='45' height='50'/></td></tr>";
                 }
                 //show list of students with this sid
                 $table=$table."</table>";
-                render("attendence_viewer_show.php");
+                #echo $table;
+                render("attendence_viewer_show.php",["present"=>$present,"date"=>$view_date,"table"=>$table,"image_path"=>$image_path]);
             }
             else{
-                $flag=0;
-                render("attendence_viewer_show.php");
+                $present=0;
+                render("attendence_viewer_show.php",["present"=>$present]);
             }
 		}
     }
