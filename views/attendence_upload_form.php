@@ -1,6 +1,6 @@
-<form action="recognize.php" method = "POST">
+<form action="recognize.php" method = "POST" enctype="multipart/form-data">
     <div class = "form-group">
-        <input class = "form-control" type="file" name="image"/>
+        <input class = "form-control" type="file" name="image" accept="image/*"/>
     </div>
     <div class = "form-group">
             <button class="btn btn-default" type="submit">

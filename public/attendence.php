@@ -9,7 +9,7 @@
             render("attendence_webcam.php",["title"=>"Webcam"]);
         }
         else{
-            $_SESSION["attendence_method"]='upload';
+            $_SESSION["method"]='upload';
             render("attendence_upload_form.php",["title"=>"Upload"]);
         }
     }
@@ -21,23 +21,27 @@
 		    }
 		    else{
 		        $attendence_array = $_SESSION['attendence_array'];
+		        print_r($attendence_array);
 		        $class = $_SESSION['class'];
                 $query = "SELECT * FROM classes WHERE class_name = ".$_SESSION['class'];
                 $results = $conn->query($query);
                 $row = $results->fetch_assoc();
                 $cid = $row['cid'];
-                $today = date('d-m-Y');
+
+                $today = (string)date('d-m-Y');
                 //getdid
                 $query = "INSERT INTO dates(date,cid) VALUES('".$today."', ".$cid.")";
                 $results=$conn->query($query);
                 if($results != 1){
-                   apologize("Email Id already Taken");
+                   apologize("Attendence Mark Failure");
                 }
                 else{
                     //LOTS OF ERROR POSSIBLE
                     $did = $conn->insert_id;
 		            foreach($attendence_array as $key => $value){
 		                //fetch sid and update his attendence
+
+		                if(!in_array($key,['faces','error'])){
                         $query = "UPDATE student(attendence) SET attendence=attendence+1 WHERE cid=".$cid."AND subject_id = '".$key."'";
                         $conn->query($query);
                         $query = "SELECT sid FROM student WHERE cid=".$cid."AND subject_id='".$key."'";
@@ -46,10 +50,14 @@
                         $sid = $row['sid'];
                         $query ="INSERT INTO attendence(did,sid) VALUES(".$did.", ".$sid.")";
                         $results = $conn->query($query);
+		                }
 		            }
                 }
 		    }
         }
-        redirect("classes.php");
+        else{
+            echo "NO reply";
+        }
+        #redirect("classes.php");
     }
 ?>

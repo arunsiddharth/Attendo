@@ -44,7 +44,7 @@
         $final = "<table class = 'table table-stripped'><thead><tr><th>S.no.</th><th>Student ID</th><th>Student Name</th><th>Image</th><th>Attendence</th></tr></thead>";
         $i=1;
         while($row = $result ->fetch_assoc()){
-            $final = $final ."<tr align = 'left'><td>".$i."</td><td>".$row["sid"]."</td><td>".$row["name"]."</td><td><img src='".$row["img_path"]."'></img></td><td>".$row["attendence"]."</td></tr>";
+            $final = $final ."<tr align = 'left'><td>".$i."</td><td>".$row["sid"]."</td><td>".$row["name"]."</td><td><img src='".$row["img_path"]."' width='50' height='50'></img></td><td>".$row["attendence"]."</td></tr>";
             $i=$i+1;
         }
         $final = $final."</table>";
@@ -69,22 +69,23 @@
         return $subject_id;
     }
     function get_name($subject_id){
-        $name = str_replace('_',' ',$subject_id);
+        $name = str_replace('-',' ',$subject_id);
         return $name;
     }
     function get_subject_id($name){
-        $subject_id = str_replace(' ','_',$name);
+        $subject_id = str_replace(' ','-',$name);
         return $subject_id;
     }
 
     function api_response_check($response){
-        $response_array = json_decode($response);
-        return !empty($response_array['face_id']);
+        $response_object = json_decode($response);
+        return intval(count($response_object->Errors))==0;
     }
 
     function api_recognize_parser($response){
+        #$response = "'".$response."'";
         $response_object = json_decode($response);
-
+        print_r($response_object);
         //count number of rows in images and error
         $images_array = $response_object -> images;
         $images_array_num_rows = count($images_array);
@@ -121,10 +122,10 @@
         }
         return $result;
     }
-    function attendence_table_maker($array_response){
-        $faces_detected = $array_response['faces'];
-        $error_flag = $array_response['error'];
-        if(!$error_flag){
+        function attendence_table_maker($array_response){
+        $faces_detected = intval($array_response['faces']);
+        $error_flag = intval($array_response['error']);
+        if($error_flag==0){
             $i=1;
             $result = "<table class='table table-striped'><thead><tr><th>Sr. No.</th><th>Student Name</th><th>Confidence</th></tr></thead>";
             foreach($array_response as $key => $conf){
@@ -138,8 +139,8 @@
         else{
             $result = "<b>No Faces Detected in the Image, Please Upload Image Again</b>";
         }
+        return $result;
     }
-
     if (!in_array($_SERVER["PHP_SELF"], ["/login.php", "/logout.php", "/register.php"]))
     {
         if (empty($_SESSION["tid"]))

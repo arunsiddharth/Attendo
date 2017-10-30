@@ -74,23 +74,32 @@
 
         //set CURL options
         curl_setopt($request, CURLOPT_POST, TRUE);
-        curl_setopt($request, CURLOPT_POSTFIELDS, $request_body);
         curl_setopt($request, CURLOPT_HTTPHEADER, $credentials);
-        curl_setopt($request, CURL_RETURNTRANSFER, TRUE);
+        curl_setopt($request, CURLOPT_SAFE_UPLOAD, false);
+        curl_setopt($request, CURLOPT_POSTFIELDS, $request_body);
+        curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);
         //output in string response
         $response = curl_exec($request);
-
         //fed it back to file, response is in JSON
         #echo $response;
-
+        curl_close($request);
         //parse response and return result
+
         $array_response = api_recognize_parser($response);
         $table = attendence_table_maker($array_response);
+
         $_SESSION['attendence_array']=$array_response;
-        render("attendence_marker.php",["table"=>$table,"array_response"=>$array_response]);
+        $_SESSION['table']=$table;
+
+        print_r($_SESSION['attendence_array']);
+        print_r($_SESSION['table']);
+        render("attendence_marker.php",["title"=>"Attendence"]);
         //final show it off to teacher before marking attendence
         //close curl session
-        curl_close($request);
+
+        }
+        else{
+            echo "Send to api FALSE";
         }
    }
 ?>

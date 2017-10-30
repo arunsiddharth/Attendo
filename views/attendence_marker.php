@@ -1,14 +1,14 @@
 <?php
 echo "Following Students Were Identified:</br>";
-echo $table;
+print_r($table);
 echo "Should Attendo Mark the attendence?</br>";
 ?>
 <form action="attendence.php" method="POST">
     <div class="radio">
-        <label><input class="form-control" name="reply" value="yes" type="button"/>Yes</label>
+        <label><input class="form-control" name="reply" value="yes" type="button"/></label>
     </div>
     <div class="radio">
-    <label><input class="form-control" name="reply" value="no" type="button"/>No</label>
+    <label><input class="form-control" name="reply" value="no" type="button"/></label>
     </div>
     <div class="form-group">
         <button class="btn btn-default" type="submit">

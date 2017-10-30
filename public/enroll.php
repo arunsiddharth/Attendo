@@ -13,7 +13,7 @@
     }
     else{
         $gallery_name = $_SESSION['class'];
-        $subject_id = subject_id_maker($_POST['name']);
+        $subject_id = get_subject_id($_POST['name']);
         $name = $_POST['name'];
 
             //for image ONLY
@@ -72,24 +72,24 @@
 
             curl_setopt($request, CURLOPT_POST, TRUE);
             curl_setopt($request, CURLOPT_HTTPHEADER, $credentials);
-            curl_setopt($request, CURLOPT_SAFE_UPLOAD, false);
+            curl_setopt($request, CURLOPT_SAFE_UPLOAD, FALSE);
             curl_setopt($request, CURLOPT_POSTFIELDS, $request_body);
-            curl_setopt($request, CURL_RETURNTRANSFER, TRUE);
+            curl_setopt($request, CURLOPT_RETURNTRANSFER, 1);
 
-            echo $credentials;
+            #echo $credentials;
             $response = curl_exec($request);
 
             //fed back the result in JSON
             echo $response;
-
+            echo "Bs bahut ho geya";
             //check for true in api response
             $api_response_flag = api_response_check($response);
             curl_close($request);
 
-            if($api_resonse_flag){
+            if($api_response_flag){
                 //get CID
-                $query = "SELECT * FROM classes WHERE class_name = ".$_SESSION['class'];
-                $results = $conn->query($query);
+                $query = "SELECT * FROM classes WHERE class_name = '".$_SESSION['class']."'";
+                $results = $conn ->query($query);
                 $row = $results->fetch_assoc();
                 $cid = $row['cid'];
 
@@ -100,6 +100,8 @@
                     apologize("Student Already Present");
                 }
                 else{
+                    $query = "UPDATE classes SET count=count+1 WHERE cid=".$cid;
+                    $conn->query($query);
                     redirect("modifier.php");
                 }
             }

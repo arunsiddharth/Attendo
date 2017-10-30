@@ -9,7 +9,13 @@
     }
     else{
         require("../views/header.php");
-        $query = "SELECT * FROM student WHERE cid=".$_SESSION['class'];
+        $query = "SELECT * FROM classes WHERE class_name = '".$_SESSION['class']."'";
+        $results = $conn ->query($query);
+        $row = $results->fetch_assoc();
+        $cid = $row['cid'];
+
+
+        $query = "SELECT * FROM student WHERE cid=".$cid;
         $results = $conn ->query($query);
         if($results->num_rows>0){
             echo student_printer($results);
