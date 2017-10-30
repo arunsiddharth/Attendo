@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2017 at 07:23 PM
+-- Generation Time: Oct 30, 2017 at 07:47 PM
 -- Server version: 5.5.49-0ubuntu0.14.04.1
 -- PHP Version: 5.5.9-1ubuntu4.20
 
@@ -31,14 +31,6 @@ CREATE TABLE IF NOT EXISTS `attendence` (
   `sid` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `attendence`
---
-
-INSERT INTO `attendence` (`did`, `sid`) VALUES
-(1, 1),
-(1, 2);
-
 -- --------------------------------------------------------
 
 --
@@ -51,14 +43,7 @@ CREATE TABLE IF NOT EXISTS `classes` (
   `tid` int(11) NOT NULL,
   `count` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`cid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `classes`
---
-
-INSERT INTO `classes` (`cid`, `class_name`, `tid`, `count`) VALUES
-(1, 'PHP', 1, 2);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -74,14 +59,7 @@ CREATE TABLE IF NOT EXISTS `dates` (
   `image` varchar(255) NOT NULL,
   PRIMARY KEY (`did`),
   UNIQUE KEY `cid` (`cid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `dates`
---
-
-INSERT INTO `dates` (`did`, `date`, `cid`, `present`, `image`) VALUES
-(1, '30-10-2017', 1, 2, 'img/PHP/IMG-20170722-WA0002.jpg');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -97,15 +75,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   `cid` int(10) NOT NULL,
   `attendence` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`sid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
-
---
--- Dumping data for table `student`
---
-
-INSERT INTO `student` (`sid`, `name`, `img_path`, `subject_id`, `cid`, `attendence`) VALUES
-(1, 'Joydip Sarkar', 'img/PHP/IMG_20171029_211145_822.jpg', 'Joydip-Sarkar', 1, 1),
-(2, 'ARUN SIDDHARTH', 'img/PHP/2.jpg', 'ARUN-SIDDHARTH', 1, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -120,14 +90,7 @@ CREATE TABLE IF NOT EXISTS `teacher` (
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`tid`),
   UNIQUE KEY `email_id` (`email_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
-
---
--- Dumping data for table `teacher`
---
-
-INSERT INTO `teacher` (`tid`, `name`, `email_id`, `password`) VALUES
-(1, 'Arun Siddharth', 'arunaaa099@gmail.com', '$2y$10$UPAImOFPk3VroNl2usrIXuoAD6kZjzHO1EWKw4n8Vc81S25tDjoQW');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
