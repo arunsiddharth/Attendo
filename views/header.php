@@ -33,7 +33,8 @@
 <?php if(!empty($_SESSION['tid'])): ?>
 
 <?php if(!empty($_SESSION["class"])) : ?>
-                      <li><button class="btn btn-primary dropdown-toggle" type="button"><a href="classes.php" style="color:white;text-decoration: none;"><?php echo $_SESSION["class"];?></a></button></li>
+                      <li><button class="btn btn-primary dropdown-toggle" type="button"><a href="classes.php" style="color:white;text-decoration: none;"><?php echo strtoupper($_SESSION["class"]);?></a></button></li>
+                      <li><button class="btn btn-primary dropdown-toggle" type="button"><a href="attendence_viewer.php" style="color:white;text-decoration: none;">ATTENDENCE VIEW</a></button></li>
 <?php else:?>
                       <li><button class="btn btn-primary dropdown-toggle" type="button"><a href="classes.php" style="color:white;text-decoration: none;">CLASSES</a></button></li>
 <?php endif?>

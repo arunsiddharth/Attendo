@@ -57,6 +57,8 @@
                         $conn->query($query);
 		                }
 		            }
+		            $query="UPDATE dates SET image='".$_SESSION['today_image']."'";
+		            $conn->query($query);
                 }
 		    }
         }

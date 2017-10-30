@@ -35,6 +35,7 @@
                     }
                     else{
                         $send_to_api_flag = 1;
+                        $_SESSION['today_image']=$target_file;
                     }
                 }
             }
