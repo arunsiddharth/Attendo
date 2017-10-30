@@ -23,7 +23,7 @@
 		        $attendence_array = $_SESSION['attendence_array'];
 		        print_r($attendence_array);
 		        $class = $_SESSION['class'];
-                $query = "SELECT * FROM classes WHERE class_name = ".$_SESSION['class'];
+                $query = "SELECT * FROM classes WHERE class_name = '".$_SESSION['class']."'";
                 $results = $conn->query($query);
                 $row = $results->fetch_assoc();
                 $cid = $row['cid'];
@@ -42,22 +42,27 @@
 		                //fetch sid and update his attendence
 
 		                if(!in_array($key,['faces','error'])){
-                        $query = "UPDATE student(attendence) SET attendence=attendence+1 WHERE cid=".$cid."AND subject_id = '".$key."'";
+
+                        $query = "UPDATE student SET attendence=attendence+1 WHERE cid=".$cid." AND subject_id = '".$key."'";
+                        echo $query;
                         $conn->query($query);
-                        $query = "SELECT sid FROM student WHERE cid=".$cid."AND subject_id='".$key."'";
+                        $query = "SELECT * FROM student WHERE cid=".$cid." AND subject_id='".$key."'";
+                        echo $query;
                         $results = $conn->query($query);
                         $row = $results ->fetch_assoc();
                         $sid = $row['sid'];
                         $query ="INSERT INTO attendence(did,sid) VALUES(".$did.", ".$sid.")";
                         $results = $conn->query($query);
+                        $query = "UPDATE dates SET present=present+1 WHERE did=".$did;
+                        $conn->query($query);
 		                }
 		            }
                 }
 		    }
         }
         else{
-            echo "NO reply";
+            echo "No reply";
         }
-        #redirect("classes.php");
+        redirect("classes.php");
     }
 ?>

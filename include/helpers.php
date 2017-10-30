@@ -85,7 +85,6 @@
     function api_recognize_parser($response){
         #$response = "'".$response."'";
         $response_object = json_decode($response);
-        print_r($response_object);
         //count number of rows in images and error
         $images_array = $response_object -> images;
         $images_array_num_rows = count($images_array);
@@ -130,7 +129,7 @@
             $result = "<table class='table table-striped'><thead><tr><th>Sr. No.</th><th>Student Name</th><th>Confidence</th></tr></thead>";
             foreach($array_response as $key => $conf){
                 if(!in_array($key,['error','faces'])){
-                    $result = $result."<tr><td>{$i}</td><td>{$key}</td><td>{$conf}</td></tr>";
+                    $result = $result."<tr align = 'left'><td>{$i}</td><td>{$key}</td><td>{$conf}</td></tr>";
                     $i = $i + 1;
                 }
             }

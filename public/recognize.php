@@ -90,10 +90,7 @@
 
         $_SESSION['attendence_array']=$array_response;
         $_SESSION['table']=$table;
-
-        print_r($_SESSION['attendence_array']);
-        print_r($_SESSION['table']);
-        render("attendence_marker.php",["title"=>"Attendence"]);
+        redirect("show_faces_found.php");
         //final show it off to teacher before marking attendence
         //close curl session
 
