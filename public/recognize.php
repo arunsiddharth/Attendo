@@ -47,8 +47,13 @@
         }
         else if($_SESSION['method']=="webcam"){
             //save image from webcam
-
-
+            $base64 = $_POST['photo'];
+            $filename = $_POST['filename'];
+            $img = str_replace('data:image/png;base64,', '', $base64);
+            $data = base64_decode($img);
+            file_put_contents('./img/'.$_SESSION['class']."/".$filename.'.png',$data);
+            $_SESSION['today_image']='./img/'.$_SESSION['class']."/".$filename.'.png';
+            $send_to_api_flag=1;
         }
 
 
@@ -56,10 +61,12 @@
 
         if($send_to_api_flag){
             $gallery_name = $_SESSION['class'];
+            if($_SESSION['method']=="upload"){
             $path = $target_file;
             $type = $imageFileType;
             $data = file_get_contents($path);
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            }
         //SEND IT TO API
         $request_url = API_URL . "/recognize";
         $request = curl_init($request_url);
